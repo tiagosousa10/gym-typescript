@@ -10,6 +10,8 @@ import image6 from '@/assets/image6.png';
 
 import {motion} from 'framer-motion'
 import HText from '@/shared/HText';
+import Class from './Class.tsx';
+
 
 const classes : Array<ClassType> = [ 
   {
@@ -78,7 +80,12 @@ const OurClasses = ({setSelectedPage} : Props) => {
         <div className='mt-10 h-[353px] w-full overflow-x-auto overflow-y-hidden'>
           <ul className='w-[2800px] whitespace-nowrap'>
             {classes.map((item,index) => (
-              <Class />
+              <Class 
+                key={`${item.name}-${index}`}
+                name={item.name}
+                description={item.description}
+                image={item.image}
+              />
             ))}
           </ul>
 
