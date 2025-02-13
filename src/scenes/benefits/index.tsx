@@ -2,6 +2,7 @@ import HText from "@/shared/HText"
 import { BenefitType, SelectedPage } from "@/shared/types"
 import { HomeModernIcon, UserGroupIcon, AcademicCapIcon } from "@heroicons/react/24/solid"
 import { motion } from "framer-motion"
+import Benefit from "./Benefit"
 
 const benefits: Array<BenefitType> = [ 
    {
@@ -51,8 +52,14 @@ const Benefits = ({setSelectedPage}: Props) => {
 
          {/*BENEFITS */}
          <div className="md:flex items-center justify-between gap-8 mt-5">
-            {benefits.map((benefit) => (
-               <Benefit/>
+            {benefits.map((benefit: BenefitType) => (
+               <Benefit
+                  key={benefit.title}
+                  icon={benefit.icon}
+                  title={benefit.title}
+                  description={benefit.description}
+                  setSelectedPage={setSelectedPage}
+               />
             ))}
          </div>
       </motion.div>
