@@ -10,7 +10,7 @@ type Props = {
 
 const ContactUs = ({setSelectedPage}: Props) => {
 
-   const inputStyles = `w-full rounded-lg bg-primary-300 px-5 py-3 placeholder-white`
+   const inputStyles = `mb-5 w-full rounded-lg bg-primary-300 px-5 py-3 placeholder-white`
 
    const {
       register,
@@ -71,7 +71,7 @@ const ContactUs = ({setSelectedPage}: Props) => {
                <form
                   target='_blank'
                   onSubmit={onSubmit}
-                  action="https://formsubmit.co/el/kitelu"
+                  action="https://formsubmit.co/e056ee3a426d7448fc0dc40babcc4177"
                   method='POST'
                >
                   <input 
@@ -106,9 +106,10 @@ const ContactUs = ({setSelectedPage}: Props) => {
                      </p>
                   )}
 
-                  <input 
+                  <textarea
                      className={`${inputStyles}`}
-                     type='text'
+                     rows={4}
+                     cols={50}
                      placeholder='MESSAGE'
                      {...register("message", {
                         required: true,
@@ -121,7 +122,33 @@ const ContactUs = ({setSelectedPage}: Props) => {
                         {errors.message.type === "maxLength" && "Max Length is 2000 characters."}
                      </p>
                   )}
+
+                  <button 
+                     type='submit'
+                     className='mt-5 rounded-lg bg-secondary-500 px-20 py-3 transition duration-500 hover:bg-primary-500 hover:text-white'
+                  >
+                     SUBMIT
+                  </button>
                </form>
+            </motion.div>
+            <motion.div
+               className='relative mt-16 basis-2/5 md:mt-0'
+               initial="hidden"
+               whileInView="visible"
+               viewport={{once:true, amount:0.5}}
+               transition={{delay:0.2,duration:0.5}}
+               variants={{
+                  hidden: {opacity:0, y:50},
+                  visible: {opacity:1, x:0},              
+               }}
+            >
+               <div className='md:before:content-evolvetext w-full before:absolute before:-bottom-20 before:-right-10 before:z-[-1] '>
+                  <img
+                     className='w-full'
+                     src={ContactUsPageGraphic} 
+                     alt="contact-us-page-graphic" 
+                  />
+               </div>
             </motion.div>
          </div>
       </motion.div>
