@@ -10,6 +10,8 @@ type Props = {
 
 const ContactUs = ({setSelectedPage}: Props) => {
 
+   const inputStyles = `w-full rounded-lg bg-primary-300 px-5 py-3 placeholder-white`
+
    const {
       register,
       trigger,
@@ -69,9 +71,56 @@ const ContactUs = ({setSelectedPage}: Props) => {
                <form
                   target='_blank'
                   onSubmit={onSubmit}
+                  action="https://formsubmit.co/el/kitelu"
                   method='POST'
                >
+                  <input 
+                     className={`${inputStyles}`}
+                     type='text'
+                     placeholder='NAME'
+                     {...register("name", {
+                        required: true,
+                        maxLength: 100,
+                     })}
+                  />
+                  {errors.name && (
+                     <p className='mt-1 text-primary-500'>
+                        {errors.name.type === "required" && "This field is required."}
+                        {errors.name.type === "maxLength" && "Max Length is 100 characters."}
+                     </p>
+                  )}
 
+                  <input 
+                     className={`${inputStyles}`}
+                     type='text'
+                     placeholder='EMAIL'
+                     {...register("email", {
+                        required: true,
+                        pattern: /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,}$/i,
+                     })}
+                  />
+                  {errors.email && (
+                     <p className='mt-1 text-primary-500'>
+                        {errors.email.type === "required" && "This field is required."}
+                        {errors.email.type === "pattern" && "Invalid email address."}
+                     </p>
+                  )}
+
+                  <input 
+                     className={`${inputStyles}`}
+                     type='text'
+                     placeholder='MESSAGE'
+                     {...register("message", {
+                        required: true,
+                        maxLength: 2000,
+                     })}
+                  />
+                  {errors.message && (
+                     <p className='mt-1 text-primary-500'>
+                        {errors.message.type === "required" && "This field is required."}
+                        {errors.message.type === "maxLength" && "Max Length is 2000 characters."}
+                     </p>
+                  )}
                </form>
             </motion.div>
          </div>
