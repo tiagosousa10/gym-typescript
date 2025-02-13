@@ -48,8 +48,10 @@ const Home = ({setSelectedPage}: Props) => {
                </div>
             </div>
 
-            <p className='mt-8 text-sm md:text-start'>
-            Lorem ipsum dolor sit amet consectetur adipiscing elit, facilisi rhoncus nullam et odio integer curabitur est, sapien dictumst vulputate fusce pretium fermentum.
+            <p className="mt-8 text-sm">
+              Unrivaled Gym. Unparalleled Training Fitness Classes. World Class
+              Studios to get the Body Shapes That you Dream of.. Get Your Dream
+              Body Now.
             </p>
          </motion.div>
          {/*ACTIONS */}
