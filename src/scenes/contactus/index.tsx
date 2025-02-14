@@ -18,7 +18,7 @@ const ContactUs = ({setSelectedPage}: Props) => {
       formState: {errors},
    } = useForm()
 
-   const onSubmit = async (e: any) => {
+   const onSubmit = async (e: any) => { //eslint-disable-line
       const isValid = await trigger()
 
       if(!isValid){
