@@ -1,5 +1,5 @@
 import { SelectedPage } from '@/shared/types';
-import React, { JSX } from 'react'
+import { JSX } from 'react'
 import AnchorLink from 'react-anchor-link-smooth-scroll';
 import { motion } from 'framer-motion';
 

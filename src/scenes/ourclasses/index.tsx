@@ -1,4 +1,3 @@
-import React from 'react'
 import { ClassType, SelectedPage } from '@/shared/types';
 
 import image1 from '@/assets/image1.png'
