@@ -3,12 +3,23 @@ import {motion } from 'framer-motion'
 import {useForm} from 'react-hook-form'
 import ContactUsPageGraphic from '@/assets/ContactUsPageGraphic.png'
 import HText from '@/shared/HText'
+import { useState } from 'react'
+import { sendEmail } from '@/services/emailService'
 
 type Props = {
    setSelectedPage: (value: SelectedPage) => void
 }
 
+type FormData = {
+   name: string
+   email: string
+   message: string
+}
+
 const ContactUs = ({setSelectedPage}: Props) => {
+   const [isSubmitting, setIsSubmitting] = useState(false)
+   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+   const [submitMessage, setSubmitMessage] = useState('')
 
    const inputStyles = `mb-5 w-full rounded-lg bg-primary-300 px-5 py-3 placeholder-white`
 
@@ -16,13 +27,38 @@ const ContactUs = ({setSelectedPage}: Props) => {
       register,
       trigger,
       formState: {errors},
-   } = useForm()
+      reset,
+      getValues,
+   } = useForm<FormData>()
 
-   const onSubmit = async (e: any) => { //eslint-disable-line
+   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
+      
       const isValid = await trigger()
 
       if(!isValid){
-         e.preventDefault()
+         return
+      }
+
+      setIsSubmitting(true)
+      setSubmitStatus('idle')
+      setSubmitMessage('')
+
+      try {
+         const data = getValues()
+         await sendEmail(data)
+         setSubmitStatus('success')
+         setSubmitMessage('Mensagem enviada com sucesso! Entraremos em contato em breve.')
+         reset()
+      } catch (error) {
+         setSubmitStatus('error')
+         setSubmitMessage(
+            error instanceof Error 
+               ? error.message 
+               : 'Erro ao enviar mensagem. Por favor, tente novamente.'
+         )
+      } finally {
+         setIsSubmitting(false)
       }
    }
 
@@ -69,10 +105,7 @@ const ContactUs = ({setSelectedPage}: Props) => {
                }}
             >
                <form
-                  target='_blank'
                   onSubmit={onSubmit}
-                  action="https://formsubmit.co/e056ee3a426d7448fc0dc40babcc4177"
-                  method='POST'
                >
                   <input 
                      className={`${inputStyles}`}
@@ -125,10 +158,27 @@ const ContactUs = ({setSelectedPage}: Props) => {
 
                   <button 
                      type='submit'
-                     className='mt-5 rounded-lg bg-secondary-500 px-20 py-3 transition duration-500 hover:bg-primary-500 hover:text-white'
+                     disabled={isSubmitting}
+                     className={`mt-5 rounded-lg bg-secondary-500 px-20 py-3 transition duration-500 hover:bg-primary-500 hover:text-white ${
+                        isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+                     }`}
                   >
-                     SUBMIT
+                     {isSubmitting ? 'ENVIANDO...' : 'SUBMIT'}
                   </button>
+
+                  {submitStatus !== 'idle' && (
+                     <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className={`mt-4 p-4 rounded-lg ${
+                           submitStatus === 'success'
+                              ? 'bg-green-100 text-green-800'
+                              : 'bg-red-100 text-red-800'
+                        }`}
+                     >
+                        {submitMessage}
+                     </motion.div>
+                  )}
                </form>
             </motion.div>
             <motion.div
